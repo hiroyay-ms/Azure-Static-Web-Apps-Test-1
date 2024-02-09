@@ -1,0 +1,29 @@
+@page "/test"
+@inject HttpClient Http
+
+<PageTitle>Test</PageTitle>
+
+<h1>Test</h1>
+
+@if (message == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <p>@message</p>
+}
+
+@code {
+    private string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try {
+            message = await Http.GetStringAsync("api/SayHello");
+        }
+        catch (Exception ex) {
+            message = ex.Message;
+        }
+    }
+}
